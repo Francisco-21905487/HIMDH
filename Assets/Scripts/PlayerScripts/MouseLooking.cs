@@ -4,40 +4,28 @@ using UnityEngine;
 
 public class MouseLooking : MonoBehaviour
 {
-    public GameObject PistolPivot;
-    public GameObject pistol;
+    public GameObject Pivot;
+    public GameObject Weapon;
     public Transform Player;
 
     void Update()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
+        //mousePosition.z = 0;
 
         Vector3 direction = (mousePosition - transform.position).normalized;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        if (mousePosition.x < transform.position.x)
+        
+        if (mousePosition.x > Player.transform.position.x)
         {
-            PistolPivot.transform.localScale = new Vector3(-1, 1, 1);
+            Pivot.transform.localScale = new Vector3(1, 1, 1);
         }
-        else
+        else if (mousePosition.x < Player.transform.position.x)
         {
-            PistolPivot.transform.localScale = new Vector3(1, 1, 1);
-        }
-
-        PistolPivot.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        if (mousePosition.x < Player.position.x)
-        {
-            transform.localScale = new Vector3(3, -3, 1);
+            Pivot.transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        if(mousePosition.x > Player.position.x)
-        {
-            transform.localScale = new Vector3(3, 3, 1);
-        }
-
-
+        Pivot.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }

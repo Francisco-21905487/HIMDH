@@ -2,38 +2,29 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float moveSpeed = 3.0f;
-    public float detectionRadius = 5.0f;
-    private Transform player;
-    private Rigidbody2D rb;
+    public GameObject player;
+    public GameObject wall;
+    public float speed, distanceBetween;
+    private float distance;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     void Update()
     {
-
-        Vector3 direction = (player.position - transform.position).normalized;
+        distance = Vector2.Distance(transform.position, player.transform.position);
+        Vector2 direction = player.transform.position - transform.position;
+        direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-
-        if (Vector3.Distance(transform.position, player.position) <= detectionRadius)
+        if (distance < distanceBetween)
         {
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+            //transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+            //rb.velocity = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
         }
-
-        if (player.position.x < transform.position.x)
-
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-
-
     }
+
 }

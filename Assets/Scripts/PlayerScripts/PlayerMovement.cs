@@ -6,7 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public GameObject PistolPivot;
+    public GameObject SwordPivot;
     public Animator animator;
+    public Rigidbody2D rb;
+    private Vector2 moveDirection;
 
     void Update()
     {
@@ -28,15 +31,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector3 direction = (mousePosition - transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; 
 
         PistolPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        SwordPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
+        moveDirection = new Vector2(horizontal, vertical).normalized;
+
+        //transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
 
         if (moveSpeed == 0)
         {
             animator.SetTrigger("Idle");
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
     }
 }
