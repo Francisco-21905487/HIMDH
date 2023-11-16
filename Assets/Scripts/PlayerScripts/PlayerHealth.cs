@@ -17,36 +17,37 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    void Death()
-    {
-        animator.SetTrigger("Die");
-
-    }
-
     private void Update()
     {
-        float moveSpeed = playerMovement.moveSpeed;
 
-        if (currentHealth == 0 || maxHealth == 0)
+    }
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
         {
-            Death();
-            moveSpeed = 0f;
+            playerMovement.moveSpeed = 0f;
+            //animator.SetTrigger("Die");
         }
     }
-    void OnTriggerEnter2D(Collider2D collision)
+
+    /*void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy" && currentHealth > 0)
         {
             currentHealth -= 1;
             print(currentHealth);
 
-            if(currentHealth == 0)
+            PlayerHealth.TakeDamage(1);
+
+            if (currentHealth == 0)
             {
                 print("Die very");
             }
 
         }
             
-    }
+    }*/
 
 }

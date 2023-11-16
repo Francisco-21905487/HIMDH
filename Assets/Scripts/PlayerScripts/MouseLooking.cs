@@ -17,7 +17,7 @@ public class MouseLooking : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        if (mousePosition.x < transform.position.x)
+        if (mousePosition.x < Player.transform.position.x)
         {
             PistolPivot.transform.localScale = new Vector3(-1, 1, 1);
         }
